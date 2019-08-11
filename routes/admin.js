@@ -4,6 +4,7 @@ const router = express.Router();
 const multer = require('multer');
 const Database = require('../models/database');
 const Project = require('../models/formModel');
+const { ensureAuthenticated } = require('../config/auth');
 const db = new Database();
 
 //config multer
@@ -22,7 +23,10 @@ let upload = multer({ storage: storage });
 router.post('/index', /*ensureAuthenticated*/ upload.single('image'), (req, res) => {
     // Nous utilisons le model addProject
     let project = new Project(req.body);
+    
     project.image = req.file.filename;   
+    
+    
     //Nous stockons l'objet en base
     project.save((err) => {
         if (err) {
@@ -32,7 +36,7 @@ router.post('/index', /*ensureAuthenticated*/ upload.single('image'), (req, res)
     })
 });
 
-router.get('/list', (req, res) => {
+router.get('/list', ensureAuthenticated, (req, res) => {
     Project.find((err, projects) => {
        
         res.render('admin_list', {projects:projects});
@@ -44,7 +48,7 @@ router.get('/list', (req, res) => {
 
 
 //GET
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     res.render('admin.ejs');
 });
 
@@ -115,7 +119,7 @@ router.post('/register', (req, res) => {
                         newUser.save()
                         .then(user => {
                             req.flash('success_msg', 'You are now register and can log in');
-                            res.redirect('/users/login');
+                            res.redirect('/admin/login');
                         })
                         .catch(err => console.log(err));
                 }))
@@ -128,7 +132,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/admin',
-        failureRedirect: '/login',
+        failureRedirect: '/admin/login',
         failureFlash: true
     })(req, res, next);
 })
@@ -137,7 +141,7 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login');
+    res.redirect('/admin/login');
 })
 
 module.exports = router;

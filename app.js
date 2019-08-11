@@ -1,12 +1,14 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const mailer = require('nodemailer');
 
-const port = 3000;
+//const port = 3001;
 
 //Passport config
 require('./config/passport')(passport);
@@ -14,11 +16,23 @@ require('./config/passport')(passport);
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//Express-session
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+//Passport middware
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(flash());
 
-app.use(express.static('public'));
+app.use(express.static('./public'));
 
 app.use('/index', require("./routes/index"));
 
@@ -50,9 +64,9 @@ app.use('/index', require("./routes/index"));
 app.use('/admin', auth);*/
 
 app.use('/admin', require("./routes/admin"));
-app.use('/admin.supp', require ("./routes/admin.supp"));
-app.use('/edit', require ("./routes/admin_edit"));
+app.use('/admin.supp', require("./routes/admin.supp"));
+app.use('/edit', require("./routes/admin_edit"));
+app.use('/contact', require("./routes/contact"))
+app.use('/admin/contact', require("./routes/admin_contacts"))
 
-
-
-app.listen(port, () => console.log(`Allo j'écoute!`));
+app.listen(3001, () => console.log(`Allo j'écoute!`));

@@ -4,31 +4,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
   <title>Document</title>
 </head>
 
 <body>
-  <div class='card'>
+  <header id="header">
+    <h1>Hello</h1>
+  </header>
+  <section id="aboutme">
+    <h1>Qui suis-je ?</h1>
+    <img src="/image/ordi3.jpg">
+  </section>
+  <div id="titrecomp">
+    <h2>Compétences</h2>
+    <hr id="mybar" />
+  </div>
+  <div id="container-cards">
+    <div class="carte">
+      <canvas id="canvas1" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas2" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas3" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas4" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas5" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas6" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas7" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas8" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas9" width="200" height="200"></canvas>
+    </div>
+    <div class="carte">
+      <canvas id="canvas10" width="200" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class='card1'>
     <% for(var i=0; i < project.length; i++) { %>
     <div class="c1">
-     <h1><%= project[i].titre %></h1> 
+      <h1><%= project[i].titre %></h1>
       <p><%= project[i].description %></p>
-      <img src="/image/<%= project[i].image %>" />
+      <img class="impec" src="/image/<%= project[i].image %>" />
     </div>
     <% } %>
   </div>
 
 
-
-  <form action="/index/creer-post" method="POST">
-    <label for="titre_2">nom</label>
-    <input type="text" name="titre_2" id="titre_2">
-    <input type="submit" name="submit_2" id="submit_2">
-  </form>
+  <div class="container">
+    <form action="/contact" method="POST">
+      <label for="fname">Nom</label><br>
+      <input type="text" id="fname" name="firstname" placeholder="Your name.."><br>
+      <label for="email">E-mail</label><br>
+      <input type="text" name="email" id="email" placeholder="Your email"><br>
+      <label for="message">Message</label><br>
+      <textarea id="message" name="message" placeholder="Write something.." style="height:200px"></textarea>
+      <input type="submit" name="valider" id="submit">
+    </form>
+  </div>
+  <script src="index.js"></script>
 </body>
 
 </html>

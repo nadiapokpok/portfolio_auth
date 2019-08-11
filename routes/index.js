@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Project = require('../models/formModel');
-const Project_1 = require('../models/contactModel');
+const Contact = require('../models/contactModel');
 
 //GET
 router.get('/', (req, res) => {
@@ -16,12 +16,12 @@ router.get('/', (req, res) => {
 
 //POST
 router.post('/creer-post', (req, res) => {
-    const project_1 = new Project_1(req.body);
-    project_1.save(err => {
+    const contact = new Contact(req.body);
+    contact.save(err => {
         if (err) {
             res.send(err);
         }
-        res.redirect('/');
+        res.redirect('/index');
     })
 });
 
