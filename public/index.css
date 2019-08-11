@@ -17,7 +17,11 @@ background-image: url("image/ordi2.jpg");
 
 #aboutme{
   height: 100vh;
-
+  display: flex;
+}
+#imgordi{
+  border: 3px solid red;
+  height: 25%;
 }
 
 /*----------------Compétences--------------------*/
